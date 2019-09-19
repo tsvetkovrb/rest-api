@@ -8,6 +8,13 @@ const app = express();
 // app.use(bodyParser.urlencoded()); // x-www-urlencoded
 app.use(bodyParser.json()); // application/json
 
-app.use('/feed', feedRoutes)
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
-app.listen(8080, () => console.log('http://localhost:8080'))
+app.use('/feed', feedRoutes);
+
+app.listen(8080, () => console.log('http://localhost:8080'));
