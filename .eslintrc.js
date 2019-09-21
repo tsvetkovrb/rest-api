@@ -15,5 +15,7 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
+    'arrow-parens': 'ban-single-arg-parens',
+    'no-console': 2
   },
 };
