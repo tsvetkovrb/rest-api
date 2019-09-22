@@ -15,7 +15,11 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
-    'arrow-parens': 'ban-single-arg-parens',
-    'no-console': 2
+    'arrow-parens': 0,
+    'no-console': 0,
+    'no-param-reassign': 0,
+    'consistent-return': 0,
+    'prefer-promise-reject-errors': 0,
+    'no-underscore-dangle': 0,
   },
 };

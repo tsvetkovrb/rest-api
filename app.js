@@ -4,8 +4,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
+const cors = require('cors');
 
 const feedRoutes = require('./routes/feed');
+const authRouts = require('./routes/auth');
 
 const app = express();
 
@@ -20,9 +22,9 @@ const fileStorage = multer.diskStorage({
 
 const fileFilter = (req, file, cb) => {
   if (
-    file.mimetype === 'image/png' ||
-    file.mimetype === 'image/jpg' ||
-    file.mimetype === 'image/jpeg'
+    file.mimetype === 'image/png'
+    || file.mimetype === 'image/jpg'
+    || file.mimetype === 'image/jpeg'
   ) {
     cb(null, true);
   } else {
@@ -35,18 +37,13 @@ app.use(bodyParser.json()); // application/json
 app.use(multer({ storage: fileStorage, fileFilter }).single('image'));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-});
-
+app.use(cors());
 app.use('/feed', feedRoutes);
+app.use('/auth', authRouts);
 
-app.use((error, req, res, next) => {
-  const { statusCode = 500, message } = error;
-  res.status(statusCode).json({ message });
+app.use((error, req, res) => {
+  const { statusCode = 500, message, data } = error;
+  res.status(statusCode).json({ message, data });
 });
 
 mongoose
@@ -60,5 +57,4 @@ mongoose
     if (!error.statusCode) {
       error.statusCode = 500;
     }
-    next(error);
   });

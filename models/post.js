@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const postSchema = new Schema(
   {
@@ -17,7 +17,8 @@ const postSchema = new Schema(
       required: true,
     },
     creator: {
-      type: Object,
+      type: Schema.Types.ObjectId,
+      ref: 'User',
       required: true,
     },
   },
