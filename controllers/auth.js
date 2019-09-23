@@ -81,3 +81,44 @@ exports.signin = (req, res, next) => {
       next(error);
     });
 };
+
+exports.getUserStatus = (req, res, next) => {
+  User.findById(req.userId)
+    .then(user => {
+      if (!user) {
+        const error = new Error('User not found!');
+        error.statusCode = 404;
+        throw error;
+      }
+      res.status(200).json({
+        status: user.status,
+      });
+    })
+    .catch(error => {
+      if (!error.statusCode) {
+        error.statusCode = 404;
+      }
+      next(error);
+    });
+};
+
+exports.patchUserStatus = (req, res, next) => {
+  const { status } = req.body;
+  User.findById(req.userId)
+    .then(user => {
+      if (!user) {
+        const error = new Error('User not found!');
+        error.statusCode = 404;
+        throw error;
+      }
+      user.status = status;
+      return user.save();
+    })
+    .then(() => res.status(201).json({ message: 'User updated' }))
+    .catch(error => {
+      if (!error.statusCode) {
+        error.statusCode = 404;
+      }
+      next(error);
+    });
+};
