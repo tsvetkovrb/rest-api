@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const cors = require('cors');
+// const io = require('socket.io');
 
 const feedRoutes = require('./routes/feed');
 const authRouts = require('./routes/auth');
@@ -51,7 +52,11 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    app.listen(8080, () => console.log('http://localhost:8080'));
+    const server = app.listen(8080, () => console.log('http://localhost:8080'));
+    const io = require('./socket').init(server);
+    io.on('connection', soket => {
+      console.log('Client connected');
+    });
   })
   .catch(error => {
     if (!error.statusCode) {
