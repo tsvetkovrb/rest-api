@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const cors = require('cors');
-// const io = require('socket.io');
 
 const feedRoutes = require('./routes/feed');
 const authRouts = require('./routes/auth');
