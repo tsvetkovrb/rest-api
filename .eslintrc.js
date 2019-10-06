@@ -22,5 +22,6 @@ module.exports = {
     'prefer-promise-reject-errors': 0,
     'no-underscore-dangle': 0,
     'global-require': 0,
+    'no-extraneous-dependencies': 0,
   },
 };
