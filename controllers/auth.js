@@ -67,11 +67,14 @@ exports.signin = async (req, res, next) => {
       token,
       userId: user._id.toString(),
     });
+    /* eslint no-useless-return: 0 */
+    return; // to testing
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 404;
     }
     next(error);
+    return error;
   }
 };
 
