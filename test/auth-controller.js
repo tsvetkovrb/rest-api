@@ -1,7 +1,6 @@
 const { expect } = require('chai');
 const { it, describe } = require('mocha');
 const sinon = require('sinon');
-const mongoose = require('mongoose');
 
 const User = require('../models/user');
 const AuthController = require('../controllers/auth');
